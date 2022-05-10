@@ -3,10 +3,12 @@ import ModaleSettings from "./ModaleSettings.vue";
 import Pong from "./Pong.vue";
 import { storeToRefs, mapState, mapActions  } from 'pinia';
 import { useUserStore } from "@/stores/user";
+import Navbar from '@/components/Navbar.vue'
 
 export default {
   name: "Game",
   components: {
+    Navbar,
     modalesettings: ModaleSettings,
     pong: Pong,
   },
@@ -19,7 +21,7 @@ export default {
   },
   created() {},
   computed: {
-    ...mapState(useUserStore, ["loggedUser", "userClick"]),
+    ...mapState(useUserStore, ["loggedUser", "isAuthenticated", "userClick"]),
   },
   methods: {
     ...mapActions(useUserStore, ['initUserClick']),
@@ -43,9 +45,10 @@ export default {
 </script>
 
 <template>
+  <Navbar :isAuthenticated="isAuthenticated" :loggedUser="loggedUser" />
   <div class="container-fluid">
     <div class="game">
-      <pong
+      <pong class="petit_game"
         v-bind:revelePlay="revelePlay"
         v-bind:paddleSize="2"
         v-bind:ballSpeed="3"
@@ -67,5 +70,16 @@ export default {
   --bs-gutter-x: 1.5rem;
   --bs-gutter-y: 0;
   flex-wrap: wrap;
+  background-color: green;
+}
+
+.petit_game {
+  padding: 1% !important;
+  padding-top: 5% !important;
+  padding-bottom: 5% !important;
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 0;
+  flex-wrap: wrap;
+  background-color: red;
 }
 </style>

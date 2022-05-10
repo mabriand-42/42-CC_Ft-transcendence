@@ -102,7 +102,6 @@ export default {
     // Socket Events
     // ##########################################################################
     this.gameSocket.on("gameUpdate", (data) => {
-      // console.log("gameUpdate: ", data);
       this.updateGame(data);
     });
     this.gameSocket.on("endGame", () => {
@@ -113,6 +112,10 @@ export default {
 
     this.launch();
     return;
+  },
+  unmounted() {
+    clearInterval(this.intervalID);
+    return ;
   },
   destroyed() {
     window.removeEventListener("keydown", this.getKeyDown);
